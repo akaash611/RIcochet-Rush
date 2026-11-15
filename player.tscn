@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ca86qe6gv12oi"]
+
+[ext_resource type="Script" uid="uid://cibiynoahwxja" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://c0phqbv3nwvcm" path="res://bullet.tscn" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://bwxifkk0v2wvd" path="res://audiomass-output (1).mp3" id="3_hqtel"]
+[ext_resource type="AudioStream" uid="uid://cpxx1i4teth6y" path="res://reload-gun-sound_CpHCnmK.mp3" id="4_sweqy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2wmd"]
+
+[node name="player" type="CharacterBody3D" unique_id=1726250848 groups=["player"]]
+collision_layer = 2
+script = ExtResource("1_4flbx")
+bullet_scene = ExtResource("2_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=17924754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_c2wmd")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2132524483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+fov = 105.0
+
+[node name="Muzzle" type="Marker3D" parent="Camera3D" unique_id=908128948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.245, -1.02)
+
+[node name="Shoot sound" type="AudioStreamPlayer" parent="." unique_id=1177294640]
+stream = ExtResource("3_hqtel")
+volume_db = 6.0
+
+[node name="Reload sound" type="AudioStreamPlayer" parent="." unique_id=1039475308]
+stream = ExtResource("4_sweqy")
+volume_db = 6.0

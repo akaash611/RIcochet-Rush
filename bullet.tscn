@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c0phqbv3nwvcm"]
+
+[ext_resource type="Script" uid="uid://crnvq0llqfibb" path="res://bullet.gd" id="1_v7oki"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nqexr"]
+radius = 0.15
+
+[sub_resource type="SphereMesh" id="SphereMesh_c2wmd"]
+radius = 0.15
+height = 0.3
+
+[node name="bullet" type="CharacterBody3D" unique_id=1458854796]
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1425839142]
+shape = SubResource("SphereShape3D_nqexr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=949630466]
+mesh = SubResource("SphereMesh_c2wmd")

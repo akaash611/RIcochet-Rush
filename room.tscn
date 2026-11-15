@@ -1,0 +1,234 @@
+[gd_scene format=3 uid="uid://dmm4374q35j2n"]
+
+[ext_resource type="PackedScene" uid="uid://ca86qe6gv12oi" path="res://player.tscn" id="1_bisa2"]
+[ext_resource type="Script" uid="uid://k6dr3ry0u0mm" path="res://enemy.gd" id="2_4o3f6"]
+[ext_resource type="Script" uid="uid://bt3tggfktuuhu" path="res://room.gd" id="3_room"]
+[ext_resource type="Texture2D" uid="uid://cw5to42b02m4i" path="res://download-removebg-preview.png" id="3_v5vuv"]
+[ext_resource type="Script" uid="uid://dsvfe62445a5h" path="res://crosshair.gd" id="4_cross"]
+[ext_resource type="Script" uid="uid://cohufb3f1vknu" path="res://minimap.gd" id="5_map"]
+[ext_resource type="AudioStream" uid="uid://c3dugxsdsnn4x" path="res://paulyudin-game-game-music-573991.mp3" id="7_8cv3p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5k2b"]
+albedo_color = Color(0.03529412, 0.45882353, 0.14901961, 1)
+metallic = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_ceiling"]
+albedo_color = Color(0.8627451, 0.84313726, 0.84705883, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4o3f6"]
+albedo_color = Color(0.8627451, 0.84313726, 0.84705883, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v5vuv"]
+albedo_color = Color(0.8627451, 0.84313726, 0.84705883, 1)
+albedo_texture = ExtResource("3_v5vuv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ka7wq"]
+albedo_color = Color(0.8627451, 0.84313726, 0.84705883, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_wall"]
+albedo_color = Color(0.8627451, 0.84313726, 0.84705883, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ka7wq"]
+
+[sub_resource type="Sky" id="Sky_v5vuv"]
+sky_material = SubResource("ProceduralSkyMaterial_ka7wq")
+
+[sub_resource type="Environment" id="Environment_c2wmd"]
+background_mode = 2
+sky = SubResource("Sky_v5vuv")
+ambient_light_source = 3
+ambient_light_color = Color(0.78, 0.8, 0.88, 1)
+ambient_light_energy = 0.75
+tonemap_mode = 3
+glow_intensity = 1.2
+adjustment_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2wmd"]
+
+[node name="Room" type="Node3D" unique_id=1722876028]
+script = ExtResource("3_room")
+
+[node name="player" parent="." unique_id=1726250848 instance=ExtResource("1_bisa2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 14)
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=627594510 groups=["Floor"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(40, 1, 40)
+material = SubResource("StandardMaterial3D_x5k2b")
+
+[node name="Ceiling" type="CSGBox3D" parent="." unique_id=2067944828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+use_collision = true
+size = Vector3(40, 1, 40)
+material = SubResource("Mat_ceiling")
+
+[node name="Wall_North" type="CSGBox3D" parent="." unique_id=1772911916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -20)
+use_collision = true
+size = Vector3(40, 10, 1)
+material = SubResource("StandardMaterial3D_4o3f6")
+
+[node name="Wall_South" type="CSGBox3D" parent="." unique_id=129212218]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 5, 20)
+use_collision = true
+size = Vector3(40, 10, 1)
+material = SubResource("StandardMaterial3D_v5vuv")
+
+[node name="Wall_East" type="CSGBox3D" parent="." unique_id=202715819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 0)
+use_collision = true
+size = Vector3(1, 10, 40)
+material = SubResource("StandardMaterial3D_ka7wq")
+
+[node name="Wall_West" type="CSGBox3D" parent="." unique_id=1526042732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 5, 0)
+use_collision = true
+size = Vector3(1, 10, 40)
+material = SubResource("Mat_wall")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=592815037]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=961502464]
+environment = SubResource("Environment_c2wmd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1808364303]
+
+[node name="Crosshair" type="Control" parent="CanvasLayer" unique_id=1337547004]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_cross")
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=1666513378]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 320.0
+offset_bottom = 38.0
+text = "Ricochet hits: 0"
+
+[node name="HintLabel" type="Label" parent="CanvasLayer" unique_id=1151864520]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -36.0
+offset_right = 1100.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "A/D move  |  Mouse look  |  Left click shoot  |  Right click zoom  | R: quick reload  |  Esc frees mouse"
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer" unique_id=2031130344]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 8.0
+offset_right = 150.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 36
+text = "TIME  20.0"
+horizontal_alignment = 1
+
+[node name="Minimap" type="Control" parent="CanvasLayer" unique_id=1796131450]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -246.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 246.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("5_map")
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1662253128]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 64
+text = "Level 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoseScreen" type="ColorRect" parent="CanvasLayer" unique_id=690931857]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6, 0, 0, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/LoseScreen" unique_id=55836070]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "TIME'S UP!
+NOW HOP OFF THE GAME. GET A JOB YOU UNEMPLOYED UNC"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WinScreen" type="ColorRect" parent="CanvasLayer" unique_id=267639137]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.53333336, 0.26666668, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/WinScreen" unique_id=1106910724]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "CONGRATULATIONS!
+Mission Successful"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=1318740045 groups=["Enemies"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -10)
+collision_layer = 4
+script = ExtResource("2_4o3f6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1057973051]
+shape = SubResource("CapsuleShape3D_c2wmd")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1516525249]
+stream = ExtResource("7_8cv3p")
+volume_db = -4.0
+autoplay = true
+parameters/looping = true
